@@ -50,41 +50,54 @@
         .form-group input[type="submit"]:hover {
             background-color: #0056b3;
         }
-        .form-group input[type="text"]:invalid,
-        .form-group input[type="password"]:invalid {
-            border-color: red;
-        }
-        .form-group input[type="text"]:invalid + .error-message,
-        .form-group input[type="password"]:invalid + .error-message {
-            display: block;
+        .error-message {
             color: red;
-            font-size: 14px;
             margin-top: 5px;
+            font-size: 14px;
         }
-        .form-group input[type="text"]:valid + .error-message,
-        .form-group input[type="password"]:valid + .error-message {
-            display: none;
+        .register-link {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px; /* Add space between form and registration link */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h2 class="welcome-message">Hello, Welcome (User)</h2>
-        <form action="#" method="post">
+        <form action="#" method="post" onsubmit="return validateForm()">
             <div class="form-group">
                 <label for="student-id">Student ID</label>
                 <input type="text" id="student-id" name="student-id" required>
-                <div class="error-message">Error: Invalid Input</div>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
-                <div class="error-message">Error: Invalid Input</div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Login">
+                <div id="error-message" class="error-message" style="display: none;">Error: Invalid Input</div>
             </div>
         </form>
     </div>
 </body>
+<!-- Moved outside of the container div -->
+<div class="register-link">
+    <p>Not registered? Register <a href="#">here</a>.</p>
+</div>
+
+<script>
+    function validateForm() {
+        var studentId = document.getElementById('student-id').value;
+        var password = document.getElementById('password').value;
+
+        if (studentId === "" || password === "") {
+            document.getElementById('error-message').style.display = "block";
+            return false;
+        } else {
+            document.getElementById('error-message').style.display = "none";
+            return true;
+        }
+    }
+</script>
 </html>

@@ -13,8 +13,8 @@
         }
         #access-bar {
             width: 100%;
-            height: 50px;
-            background-color: #ffffff;
+            height: 70px; /* Reduced height for better aesthetics */
+            background-color: #f2f2f2; /* Light grey background */
             padding: 10px;
             display: flex;
             justify-content: space-between;
@@ -24,10 +24,11 @@
             z-index: 1000;
         }
         #logo {
-            width: 40px;
-            height: 40px;
-            background-image: url('logo.png'); /* Path to your logo image */
-            background-size: cover;
+            width: 100px; /* Adjust size as needed */
+            height: auto;
+            background-image: url("black-iicp.png"); /* Updated to use a relative path */
+            background-size: contain;
+            background-repeat: no-repeat;
         }
         #login-btn, #profile-btn {
             padding: 8px 16px;
@@ -36,18 +37,31 @@
             color: #ffffff;
             border-radius: 5px;
             cursor: pointer;
+            margin-left: 10px; /* Add some spacing between buttons */
         }
         #website-title {
-            font-size: 15px;
+            font-size: 18px; /* Increased font size for better readability */
+            font-weight: bold; /* Bold font weight for emphasis */
         }
         #content {
-            margin-top: 60px; /* Adjusted to accommodate the access bar */
-            /* Your content styles here */
+            margin-top: 70px; /* Adjusted to accommodate the access bar with logo */
+            padding: 20px; /* Added padding for content */
+        }
+        #fill-image {
+            position: fixed;
+            top: 70px; /* Adjusted to start below the access bar */
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 70px); /* Adjusted to fill the remaining height */
+            background-image: url("inst-profile-header-inti-penang.jpg"); /* Updated to use a relative path */
+            background-size: cover;
+            z-index: -1;
         }
     </style>
 </head>
 <body>
     <div id="access-bar">
+        <div id="logo"></div>
         <div id="website-title">INTI Task Management System</div>
         <div>
             <button id="login-btn">Login</button>
@@ -55,6 +69,8 @@
         </div>
     </div>
 
+    <div id="fill-image"></div> <!-- This div will fill the space below the access bar -->
+    
     <div id="content">
         <!-- Your content goes here -->
     </div>
