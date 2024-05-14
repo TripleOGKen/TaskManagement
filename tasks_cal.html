@@ -47,6 +47,7 @@
         <th>Priority</th>
         <th>Task Name</th>
         <th>Due Date</th>
+        <th>Action</th>
       </tr>
     </thead>
     <tbody id="task-list"></tbody>
@@ -92,6 +93,7 @@
         <td>${priority}</td>
         <td>${taskName}</td>
         <td>${dueDate}</td>
+        <td><button onclick="deleteTask(this)">Delete</button></td>
       `;
       taskNameInput.value = "";
       dueDateInput.value = "";
@@ -128,6 +130,11 @@
         switching = true;
       }
     }
+  }
+
+  function deleteTask(button) {
+    var row = button.parentNode.parentNode;
+    row.parentNode.removeChild(row);
   }
 
   // Calendar Logic
