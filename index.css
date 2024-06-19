@@ -1,9 +1,75 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 14 May 2024, 8:11:27 pm
-    Author     : Asus
-*/
+/* Reset and general styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: lightblue;
+    font-family: Helvetica, Arial, sans-serif;
+}
 
+/* Access bar styles */
+#access-bar {
+    width: 100%;
+    height: 70px; /* Reduced height for better aesthetics */
+    background-color: #f2f2f2; /* Light grey background */
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+}
+
+#logo {
+    width: 100px; /* Adjust size as needed */
+    height: auto;
+    background-image: url("black iicp.png"); /* Updated to use a relative path */
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+#button-container {
+    display: flex;
+    gap: 10px; /* Spacing between buttons */
+}
+
+#login-btn, #register-btn {
+    padding: 8px 16px;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#login-btn:hover, #register-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Title styles */
+#website-title {
+    font-size: 18px; /* Increased font size for better readability */
+    font-weight: bold; /* Bold font weight for emphasis */
+    text-align: center; /* Center text horizontally */
+    margin: 0 auto; /* Centering using margin */
+    flex: 1; /* Take up remaining space */
+}
+
+/* Content area styles */
+#content {
+    margin-top: 70px; /* Adjusted to accommodate the access bar */
+    padding: 20px; /* Added padding for content */
+}
+
+/* Fill image styles */
+#fill-image {
+    position: fixed;
+    top: 70px; /* Adjusted to start below the access bar */
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 70px); /* Adjusted to fill the remaining height */
+    background-image: url("inst-profile-header-inti-penang.jpg"); /* Updated to use a relative path */
+    background-size: cover;
+    opacity: 0.5; /* Faded effect */
+    z-index: -1;
+}
