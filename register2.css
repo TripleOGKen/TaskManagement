@@ -4,22 +4,26 @@ body {
     padding: 0;
     background-color: #f2f2f2;
 }
+
 .container {
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #ffc4c4; /* Light red background color */
+    background-color: #ffffff;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .form-group {
     margin-bottom: 20px;
 }
+
 .form-group label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
+
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="password"] {
@@ -28,15 +32,23 @@ body {
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-.form-group input[type="submit"] {
+
+.register-button {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
     border: none;
-    background-color: #8b0000; /* Dark red color for the button */
+    background-color: #007bff; /* Default blue color */
     color: #ffffff;
     cursor: pointer;
 }
-.form-group input[type="submit"]:hover {
-    background-color: #660000; /* Darker red color for button hover */
+
+.register-button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
+
+.register-link {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 20px; /* Add space between form and registration link */
 }
