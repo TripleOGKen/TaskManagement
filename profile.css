@@ -1,9 +1,103 @@
-/*
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this template
-*/
-/* 
-    Created on : 14 May 2024, 8:11:00 pm
-    Author     : Asus
-*/
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
 
+.sidebar {
+    width: 80px;
+    background-color: #333;
+    color: white;
+    height: 100vh;
+    transition: width 0.3s;
+    overflow: hidden;
+    position: fixed;
+    z-index: 1000;
+}
+
+.sidebar-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.sidebar-item {
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.sidebar-item:hover {
+    background-color: #575757;
+}
+
+.container {
+    margin-left: 100px;
+    padding: 20px;
+    width: calc(100% - 60px);
+    transition: margin-left 0.3s, width 0.3s;
+}
+
+h2 {
+    text-align: center;
+    color: #333;
+}
+
+#profilePictureContainer {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="text"], input[type="email"], input[type="password"], input[type="file"], textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#editProfileForm {
+    display: none;
+}
+
+.greyed-out {
+    background-color: #e0e0e0;
+}
+
+#croppingTool img {
+    max-width: 100%;
+    display: block;
+    margin: 0 auto;
+}
