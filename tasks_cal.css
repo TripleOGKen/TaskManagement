@@ -1,7 +1,20 @@
-/* Styles for Task Manager */
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  margin: 20px;
+  padding: 0;
+}
+
+h1, h2 {
+  margin-bottom: 20px;
+}
+
+/* Task Manager styles */
 .task-table {
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .task-table th, .task-table td {
@@ -14,18 +27,15 @@
   background-color: #f2f2f2;
 }
 
-/* Styles for Calendar */
-.calendar {
-  border-collapse: collapse;
-  width: 100%;
+#task-manager {
+  margin-bottom: 40px;
 }
 
-.calendar th, .calendar td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: center;
+#task-manager > div {
+  margin-top: 10px;
 }
 
-.calendar th {
-  background-color: #f2f2f2;
+/* FullCalendar styles (if any custom styles needed) */
+#full-calendar {
+  margin-top: 20px;
 }

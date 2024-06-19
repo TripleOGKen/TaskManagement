@@ -4,8 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Task Manager</title>
-<link rel="stylesheet" href="tasks_cal.css">
+<link rel="stylesheet" href="C:\XAMPP\htdocs\TaskManagement\packages\core\index.global.min.js">
+<link rel="stylesheet" href="C:\XAMPP\htdocs\TaskManagement\packages\daygrid\index.global.min.js">
+<style>
+  /* Additional styles if needed */
+</style>
 </head>
+
 <body>
 
 <h1>Task Manager</h1>
@@ -31,25 +36,31 @@
   </div>
 </div>
 
-<!-- Calendar -->
-<div id="calendar">
-  <h2>Calendar</h2>
-  <table class="calendar">
-    <thead>
-      <tr>
-        <th>Sun</th>
-        <th>Mon</th>
-        <th>Tue</th>
-        <th>Wed</th>
-        <th>Thu</th>
-        <th>Fri</th>
-        <th>Sat</th>
-      </tr>
-    </thead>
-    <tbody id="calendar-body"></tbody>
-  </table>
-</div>
+<!-- FullCalendar -->
+<div id="full-calendar"></div>
 
-<script src="scripts.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('full-calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      plugins: [ 'dayGrid' ], // specify plugins
+      header: {
+        left: 'prev,next today',
+        center: 'title',
+        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+      },
+      events: [
+        // your events data here
+        // { title: 'Event 1', start: '2024-06-01' },
+        // { title: 'Event 2', start: '2024-06-05' }
+      ]
+    });
+
+    calendar.render();
+  });
+</script>
 </body>
 </html>
