@@ -9,13 +9,19 @@ body {
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #ffffff;
+    background-color: #ffffff; /* White background */
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Center align all text within container */
+}
+
+.container h2 {
+    margin-top: 0; /* Remove default margin */
 }
 
 .form-group {
     margin-bottom: 20px;
+    text-align: left; /* Align labels and inputs to the left */
 }
 
 .form-group label {
