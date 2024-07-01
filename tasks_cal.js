@@ -18,10 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'profile.html';
     });
 
-    document.getElementById('settings-btn').addEventListener('click', function() {
-        alert('Settings button clicked');
-    });
-
     document.getElementById('logout-btn').addEventListener('click', function() {
         window.location.href = 'index.html';
     });
@@ -186,7 +182,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const fileURL = URL.createObjectURL(file);
         pdfViewer.src = fileURL;
-        currentRotation = 180;
+        currentRotation = 0;
         pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
     });
 
