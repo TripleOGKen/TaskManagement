@@ -1,66 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Task Manager</title>
-<link rel="stylesheet" href="C:\XAMPP\htdocs\TaskManagement\packages\core\index.global.min.js">
-<link rel="stylesheet" href="C:\XAMPP\htdocs\TaskManagement\packages\daygrid\index.global.min.js">
-<style>
-  /* Additional styles if needed */
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Calendar with PDF Viewer</title>
+    <link rel="stylesheet" href="tasks_cal.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/main.min.css" rel="stylesheet">
 </head>
-
 <body>
-
-<h1>Task Manager</h1>
-
-<!-- Task Manager -->
-<div id="task-manager">
-  <h2>Task Management System</h2>
-  <table class="task-table">
-    <thead>
-      <tr>
-        <th>Priority</th>
-        <th>Task Name</th>
-        <th>Due Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody id="task-list"></tbody>
-  </table>
-  <div>
-    <input type="text" id="task-name" placeholder="Task Name">
-    <input type="date" id="due-date">
-    <button onclick="addTask()">Add Task</button>
-  </div>
-</div>
-
-<!-- FullCalendar -->
-<div id="full-calendar"></div>
-
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.min.js"></script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('full-calendar');
-
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-      plugins: [ 'dayGrid' ], // specify plugins
-      header: {
-        left: 'prev,next today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek,timeGridDay'
-      },
-      events: [
-        // your events data here
-        // { title: 'Event 1', start: '2024-06-01' },
-        // { title: 'Event 2', start: '2024-06-05' }
-      ]
-    });
-
-    calendar.render();
-  });
-</script>
+    <div class="main-container">
+        <div class="header">
+            <h1>Task Manager</h1>
+            <div class="auto-priority-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="auto-priority-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span>Auto Priority</span>
+            </div>
+        </div>
+        <div class="pdf-viewer-container">
+            <input type="file" id="pdf-upload" accept="application/pdf">
+            <div class="pdf-controls">
+            </div>
+            <iframe id="pdf-viewer"></iframe>
+        </div>
+        <div class="container">
+            <div id="calendar"></div>
+            <div class="task-section">
+                <h2>Tasks</h2>
+                <form id="task-form">
+                    <input type="text" id="task-input" placeholder="New task" required>
+                    <input type="date" id="task-date" required>
+                    <input type="time" id="task-time" required>
+                    <textarea id="task-description" placeholder="Task description"></textarea>
+                    <select id="priority-select">
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    <button type="submit">Add Task</button>
+                </form>
+                <ul id="task-list"></ul>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
+    <script src="tasks_cal.js"></script>
 </body>
 </html>
