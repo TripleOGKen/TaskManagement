@@ -13,6 +13,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const rotateRight = document.getElementById('rotate-right');
     const autoPriorityToggle = document.getElementById('auto-priority-toggle');
     
+    // Sidebar button event listeners
+    document.getElementById('profile-btn').addEventListener('click', function() {
+        window.location.href = 'profile.html';
+    });
+
+    document.getElementById('settings-btn').addEventListener('click', function() {
+        alert('Settings button clicked');
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        window.location.href = 'index.html';
+    });
+    
     let tasks = [];
     let currentRotation = 0;
     let isAutoPriority = false;
