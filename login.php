@@ -25,7 +25,7 @@
         </form>
     </div>
     <div class="register-link">
-        <p>Not registered? Register <a href="register2.html">here</a>.</p>
+        <p>Not registered? Register <a href="register2.php">here</a>.</p>
     </div>
     <script src="js/login.js"></script>
 </body>
