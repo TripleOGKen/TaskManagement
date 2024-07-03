@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="index.css"> <!-- Link to external CSS file -->
 </head>
 <body>
-    <div id="access-bar">
+    <div id="access-bar"
         <div id="title-container">
             <div id="website-title">INTI Task Management System</div>
         </div>
