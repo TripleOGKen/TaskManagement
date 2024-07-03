@@ -1,7 +1,6 @@
 <?php
-
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Scripting/EmptyPHP.php to edit this template
- */
-
+const DB_HOST = 'localhost';
+const DB_NAME = 'taskmanagement';
+const DB_USER = 'root';
+const DB_PASSWORD = '';
+?>
