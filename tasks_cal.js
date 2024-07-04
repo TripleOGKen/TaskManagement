@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Sidebar button event listeners
     document.getElementById('profile-btn').addEventListener('click', function() {
-        window.location.href = 'profile.html';
+        window.location.href = 'profile.php';
     });
 
     document.getElementById('logout-btn').addEventListener('click', function() {

@@ -35,7 +35,7 @@ $conn->close();
     <div class="sidebar">
         <div class="sidebar-content">
             <a href="tasks_cal.php" class="sidebar-item">Tasks</a>
-            <a href="index.php" class="sidebar-item">Logout</a>
+            <a href="index.html" class="sidebar-item">Logout</a>
         </div>
     </div>
     <div class="main-content">
