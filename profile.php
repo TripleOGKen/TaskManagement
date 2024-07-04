@@ -1,3 +1,28 @@
+<?php
+require_once 'databaseTask.php';
+
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$stmt = $conn->prepare("SELECT student_id, student_email FROM student WHERE student_id = ?");
+$stmt->bind_param("s", $_SESSION['user_id']);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+
+$stmt->close();
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +34,8 @@
 <body>
     <div class="sidebar">
         <div class="sidebar-content">
-            <a href="tasks_cal.html" class="sidebar-item">Tasks</a>
-            <a href="index.html" class="sidebar-item">Logout</a>
+            <a href="tasks_cal.php" class="sidebar-item">Tasks</a>
+            <a href="index.php" class="sidebar-item">Logout</a>
         </div>
     </div>
     <div class="main-content">
@@ -22,7 +47,7 @@
             <div id="profileInfo">
                 <div>
                     <label for="studentId">Student ID:</label>
-                    <input type="text" id="studentId" name="studentId" readonly class="greyed-out">
+                    <input type="text" id="studentId" name="studentId" value="<?php echo htmlspecialchars($user['student_id']); ?>" readonly class="greyed-out">
                 </div>
                 <div>
                     <label for="username">Username:</label>
@@ -30,11 +55,11 @@
                 </div>
                 <div>
                     <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" readonly>
+                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['student_email']); ?>" readonly>
                 </div>
                 <div>
                     <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" readonly>
+                    <input type="password" id="password" name="password" value="********" readonly>
                 </div>
                 <button id="editBtn">Edit Profile</button>
             </div>

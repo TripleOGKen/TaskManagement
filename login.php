@@ -1,3 +1,52 @@
+<?php
+require_once 'databaseTask.php';
+
+session_start();
+
+$response = array('success' => false, 'message' => '');
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $student_id = $_POST['student-id'];
+    $password = $_POST['password'];
+
+    $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+
+    if ($conn->connect_error) {
+        $response['message'] = "Connection failed: " . $conn->connect_error;
+    } else {
+        $stmt = $conn->prepare("SELECT student_id, student_email, student_password FROM student WHERE student_id = ?");
+        $stmt->bind_param("s", $student_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if ($result->num_rows === 1) {
+            $user = $result->fetch_assoc();
+            if (password_verify($password, $user['student_password'])) {
+                $_SESSION['user_id'] = $user['student_id'];
+                $_SESSION['user_email'] = $user['student_email'];
+                $response['success'] = true;
+                $response['message'] = 'Login successful';
+                $response['redirect'] = 'tasks_cal.php';
+            } else {
+                $response['message'] = "Invalid student ID or password.";
+            }
+        } else {
+            $response['message'] = "Invalid student ID or password.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
+
+    // Send JSON response for AJAX requests
+    if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +57,8 @@
 </head>
 <body>
     <div class="container">
-        <h2 class="welcome-message">Hello, TEST1234s (User)</h2>
-        <form action="#" method="post" onsubmit="return validateForm()">
+        <h2 class="welcome-message">Hello, Welcome (User)</h2>
+        <form id="login-form" action="#" method="post">
             <div class="form-group">
                 <label for="student-id">Student ID</label>
                 <input type="text" id="student-id" name="student-id" required>
