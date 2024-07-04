@@ -1,13 +1,18 @@
 <?php
-require_once 'databaseTask.php';
+// Enable error reporting for debugging
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
-session_start();
+require_once 'databaseTask.php';
 
 $response = array('success' => false, 'message' => '');
 
+session_start(); // Start or resume session
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $student_id = $_POST['student-id'];
-    $password = $_POST['password'];
+    $student_id = $_POST['student_id'];
+    $student_password = $_POST['student_password'];
 
     $conn = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
@@ -21,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows === 1) {
             $user = $result->fetch_assoc();
-            if (password_verify($password, $user['student_password'])) {
-                $_SESSION['user_id'] = $user['student_id'];
-                $_SESSION['user_email'] = $user['student_email'];
+            if (password_verify($student_password, $user['student_password'])) {
+                $_SESSION['student_id'] = $user['student_id'];
+                $_SESSION['student_email'] = $user['student_email'];
                 $response['success'] = true;
                 $response['message'] = 'Login successful';
                 $response['redirect'] = 'tasks_cal.php';
@@ -43,6 +48,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         header('Content-Type: application/json');
         echo json_encode($response);
         exit;
+    } else {
+        // Redirect if not an AJAX request and login was successful
+        if ($response['success']) {
+            header('Location: tasks_cal.php');
+            exit;
+        }
     }
 }
 ?>
@@ -58,14 +69,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
     <div class="container">
         <h2 class="welcome-message">Hello, Welcome (User)</h2>
-        <form id="login-form" action="#" method="post">
+        <form id="login-form" action="login.php" method="post">
             <div class="form-group">
-                <label for="student-id">Student ID</label>
-                <input type="text" id="student-id" name="student-id" required>
+                <label for="student_id">Student ID</label>
+                <input type="text" id="student_id" name="student_id" required>
             </div>
             <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+                <label for="student_password">Password</label>
+                <input type="password" id="student_password" name="student_password" required>
             </div>
             <div class="form-group">
                 <input type="submit" value="Login">

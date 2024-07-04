@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const errorMessage = document.getElementById('error-message');
     
     form.addEventListener('submit', function(e) {
-        e.preventDefault();
+        e.preventDefault(); //prevent default form submission
         
         const formData = new FormData(form);
         
