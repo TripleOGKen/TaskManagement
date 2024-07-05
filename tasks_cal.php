@@ -17,6 +17,20 @@ $db = new mysqli($db_host, $db_user, $db_password, $db_name);
 
 if ($db->connect_error) {
     die("Database connection failed: " . $db->connect_error);
+    
+}
+
+function getTasks($db, $student_id) {
+    $stmt = $db->prepare("SELECT * FROM tasks WHERE student_id = ? ORDER BY task_date ASC");
+    $stmt->bind_param("i", $student_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $tasks = [];
+    while ($row = $result->fetch_assoc()) {
+        $tasks[] = $row;
+    }
+    $stmt->close();
+    return $tasks;
 }
 
 // Fetch PDF if exists
@@ -29,6 +43,7 @@ $pdf_content_base64 = $row['pdf_file'] ?? null;
 $stmt->close();
 
 $has_pdf = !empty($pdf_content_base64);
+$tasks = getTasks($db, $student_id);
 ?>
 
 <!DOCTYPE html>
@@ -71,11 +86,11 @@ $has_pdf = !empty($pdf_content_base64);
             <div class="task-section">
                 <h2>Tasks</h2>
                 <form id="task-form">
-                    <input type="text" id="task-input" placeholder="New task" required>
-                    <input type="date" id="task-date" required>
-                    <input type="time" id="task-time" required>
-                    <textarea id="task-description" placeholder="Task description"></textarea>
-                    <select id="priority-select">
+                    <input type="text" id="task_name" placeholder="New task" required>
+                    <input type="date" id="task_date" required>
+                    <input type="time" id="task_time" required>
+                    <textarea id="task_description" placeholder="Task description"></textarea>
+                    <select id="task_priority">
                         <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
@@ -88,5 +103,6 @@ $has_pdf = !empty($pdf_content_base64);
     </div>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.14/index.global.min.js"></script>
     <script src="tasks_cal.js"></script>
+    <script> var initialTasks = <?php echo json_encode($tasks); ?>; </script>
 </body>
 </html>
