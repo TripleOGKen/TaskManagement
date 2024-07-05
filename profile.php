@@ -19,9 +19,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['editUsername'];
     $email = $_POST['editEmail'];
     $password = $_POST['editPassword'];
+    
+    // Check for profile picture upload
+    $profile_picture = null;
+    if (isset($_FILES["editProfilePicture"]) && $_FILES["editProfilePicture"]["error"] == 0) {
+        $profile_picture = file_get_contents($_FILES["editProfilePicture"]["tmp_name"]);
+    }
 
-    $stmt = $conn->prepare("UPDATE student SET student_name = ?, student_email = ? WHERE student_id = ?");
-    $stmt->bind_param("sss", $username, $email, $_SESSION['student_id']);
+    // Update profile information
+    if ($profile_picture) {
+        // For debugging purposes
+        $file_size = strlen($profile_picture);
+        error_log("Profile picture size: $file_size bytes");
+
+        $stmt = $conn->prepare("UPDATE student SET student_name = ?, student_email = ?, profile_picture = ? WHERE student_id = ?");
+        $stmt->bind_param("ssbs", $username, $email, $null, $_SESSION['student_id']);
+        $stmt->send_long_data(2, $profile_picture);
+    } else {
+        $stmt = $conn->prepare("UPDATE student SET student_name = ?, student_email = ? WHERE student_id = ?");
+        $stmt->bind_param("sss", $username, $email, $_SESSION['student_id']);
+    }
 
     if ($stmt->execute()) {
         if (!empty($password)) {
@@ -38,7 +55,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 
-$stmt = $conn->prepare("SELECT student_id, student_email, student_name FROM student WHERE student_id = ?");
+//fetch user details
+$stmt = $conn->prepare("SELECT student_id, student_email, student_name, profile_picture FROM student WHERE student_id = ?");
 $stmt->bind_param("s", $_SESSION['student_id']);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -70,7 +88,11 @@ $conn->close();
                 <p><?php echo $update_message; ?></p>
             <?php endif; ?>
             <div id="profilePictureContainer">
-                <img id="profilePicture" src="default-profile.png" alt="Profile Picture" class="profile-pic">
+                <?php if (!empty($user['profile_picture'])): ?>
+                    <img id="profilePicture" src="data:image/jpeg;base64,<?php echo base64_encode($user['profile_picture']); ?>" alt="Profile Picture" class="profile-pic">
+                <?php else: ?>
+                    <img id="profilePicture" src="default-profile.png" alt="Profile Picture" class="profile-pic">
+                <?php endif; ?>
             </div>
             <div id="profileInfo">
                 <div>
@@ -92,7 +114,7 @@ $conn->close();
                 <button id="editBtn">Edit Profile</button>
             </div>
             <div id="editProfileForm" style="display: none;">
-                <form id="profileForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <form id="profileForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" enctype="multipart/form-data">
                     <div>
                         <label for="editUsername">Username:</label>
                         <input type="text" id="editUsername" name="editUsername" value="<?php echo htmlspecialchars($user['student_name']); ?>">
