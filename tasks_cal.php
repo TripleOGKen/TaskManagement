@@ -23,8 +23,9 @@ if ($db->connect_error) {
 $stmt = $db->prepare("SELECT pdf_file FROM student WHERE student_id = ?");
 $stmt->bind_param("i", $student_id);
 $stmt->execute();
-$stmt->bind_result($pdf_content_base64);
-$stmt->fetch();
+$result = $stmt->get_result();
+$row = $result->fetch_assoc();
+$pdf_content_base64 = $row['pdf_file'] ?? null;
 $stmt->close();
 
 $has_pdf = !empty($pdf_content_base64);

@@ -17,8 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['pdf_file'])) {
     $pdf_content_base64 = base64_encode($pdf_content);
 
     // Connect to your database (replace with your actual database credentials)
-    $db = new mysqli('DB_HOST, DB_USER, DB_PASSWORD, DB_NAME');
+    $db_host = 'localhost';
+    $db_user = 'root';
+    $db_password = '';
+    $db_name = 'taskmanagement';
 
+    $db = new mysqli($db_host, $db_user, $db_password, $db_name);
+    
     if ($db->connect_error) {
         exit('Database connection failed: ' . $db->connect_error);
     }

@@ -194,6 +194,16 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(response => response.text())
     .then(result => {
         console.log(result);
+        if (result === 'PDF uploaded successfully') {
+            // Read the file and display it
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                pdfViewer.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            console.error('Error uploading PDF:', result);
+        }
     })
     .catch(error => {
         console.error('Error:', error);
