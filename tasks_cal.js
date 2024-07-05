@@ -282,4 +282,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize tasks
     tasks.forEach(addTaskToList);
+
+    // Landscape Mode Detection
+    function checkOrientation() {
+        if (window.innerHeight > window.innerWidth) {
+            alert("Please use landscape mode for better experience.");
+        }
+    }
+
+    window.addEventListener('resize', checkOrientation);
+    checkOrientation();
 });
