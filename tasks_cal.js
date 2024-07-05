@@ -9,8 +9,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const taskList = document.getElementById('task-list');
     const pdfUpload = document.getElementById('pdf-upload');
     const pdfViewer = document.getElementById('pdf-viewer');
-    const rotateLeft = document.getElementById('rotate-left');
-    const rotateRight = document.getElementById('rotate-right');
     const autoPriorityToggle = document.getElementById('auto-priority-toggle');
     
     // Sidebar button event listeners
@@ -174,26 +172,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // PDF Viewer
     pdfUpload.addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file.type !== 'application/pdf') {
-            console.error('File is not a PDF');
-            return;
-        }
+    const file = event.target.files[0];
+    if (file.type !== 'application/pdf') {
+        console.error('File is not a PDF');
+        return;
+    }
 
-        const fileURL = URL.createObjectURL(file);
-        pdfViewer.src = fileURL;
-        currentRotation = 0;
-        pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
-    });
+    const fileURL = URL.createObjectURL(file);
+    pdfViewer.src = fileURL;
+    currentRotation = 0;
+    pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
 
-    // Rotation buttons
-    rotateLeft.addEventListener('click', function() {
-        currentRotation = (currentRotation - 90) % 360;
-        pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
-    });
+    // Upload PDF to server
+    const formData = new FormData();
+    formData.append('pdf_file', file);
 
-    rotateRight.addEventListener('click', function() {
-        currentRotation = (currentRotation + 90) % 360;
-        pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
+    fetch('upload_pdf.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(result => {
+        console.log(result);
+    })
+    .catch(error => {
+        console.error('Error:', error);
     });
+});
+
 });

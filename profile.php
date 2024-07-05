@@ -2,7 +2,7 @@
 require_once 'databaseTask.php';
 
 session_start();
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['student_id'])) {
     header("Location: login.php");
     exit();
 }
@@ -13,8 +13,33 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$stmt = $conn->prepare("SELECT student_id, student_email FROM student WHERE student_id = ?");
-$stmt->bind_param("s", $_SESSION['user_id']);
+$update_message = '';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST['editUsername'];
+    $email = $_POST['editEmail'];
+    $password = $_POST['editPassword'];
+
+    $stmt = $conn->prepare("UPDATE student SET student_name = ?, student_email = ? WHERE student_id = ?");
+    $stmt->bind_param("sss", $username, $email, $_SESSION['student_id']);
+
+    if ($stmt->execute()) {
+        if (!empty($password)) {
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+            $pwd_stmt = $conn->prepare("UPDATE student SET student_password = ? WHERE student_id = ?");
+            $pwd_stmt->bind_param("ss", $hashed_password, $_SESSION['student_id']);
+            $pwd_stmt->execute();
+            $pwd_stmt->close();
+        }
+        $update_message = "Profile updated successfully";
+    } else {
+        $update_message = "Failed to update profile: " . $stmt->error;
+    }
+    $stmt->close();
+}
+
+$stmt = $conn->prepare("SELECT student_id, student_email, student_name FROM student WHERE student_id = ?");
+$stmt->bind_param("s", $_SESSION['student_id']);
 $stmt->execute();
 $result = $stmt->get_result();
 $user = $result->fetch_assoc();
@@ -41,40 +66,43 @@ $conn->close();
     <div class="main-content">
         <div class="container">
             <h2>User Profile</h2>
+            <?php if (!empty($update_message)): ?>
+                <p><?php echo $update_message; ?></p>
+            <?php endif; ?>
             <div id="profilePictureContainer">
                 <img id="profilePicture" src="default-profile.png" alt="Profile Picture" class="profile-pic">
             </div>
             <div id="profileInfo">
                 <div>
-                    <label for="studentId">Student ID:</label>
-                    <input type="text" id="studentId" name="studentId" value="<?php echo htmlspecialchars($user['student_id']); ?>" readonly class="greyed-out">
+                    <label for="student_id">Student ID:</label>
+                    <input type="text" id="student_id" name="student_id" value="<?php echo htmlspecialchars($user['student_id']); ?>" readonly class="greyed-out">
                 </div>
                 <div>
-                    <label for="username">Username:</label>
-                    <input type="text" id="username" name="username" readonly>
+                    <label for="student_name">Username:</label>
+                    <input type="text" id="student_name" name="student_name" value="<?php echo htmlspecialchars($user['student_name']); ?>" readonly>
                 </div>
                 <div>
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user['student_email']); ?>" readonly>
+                    <label for="student_email">Email:</label>
+                    <input type="email" id="student_email" name="student_email" value="<?php echo htmlspecialchars($user['student_email']); ?>" readonly>
                 </div>
                 <div>
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" value="********" readonly>
+                    <label for="student_password">Password:</label>
+                    <input type="password" id="student_password" name="student_password" value="********" readonly>
                 </div>
                 <button id="editBtn">Edit Profile</button>
             </div>
             <div id="editProfileForm" style="display: none;">
-                <form id="profileForm">
+                <form id="profileForm" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                     <div>
                         <label for="editUsername">Username:</label>
-                        <input type="text" id="editUsername" name="editUsername">
+                        <input type="text" id="editUsername" name="editUsername" value="<?php echo htmlspecialchars($user['student_name']); ?>">
                     </div>
                     <div>
                         <label for="editEmail">Email:</label>
-                        <input type="email" id="editEmail" name="editEmail">
+                        <input type="email" id="editEmail" name="editEmail" value="<?php echo htmlspecialchars($user['student_email']); ?>">
                     </div>
                     <div>
-                        <label for="editPassword">Password:</label>
+                        <label for="editPassword">New Password (leave blank to keep current):</label>
                         <input type="password" id="editPassword" name="editPassword">
                     </div>
                     <div>

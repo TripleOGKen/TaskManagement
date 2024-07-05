@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     var cancelBtn = document.getElementById('cancelBtn');
     var profileInfo = document.getElementById('profileInfo');
     var editProfileForm = document.getElementById('editProfileForm');
-    var profileForm = document.getElementById('profileForm');
     var profilePicture = document.getElementById('profilePicture');
     var editProfilePicture = document.getElementById('editProfilePicture');
     var croppingTool = document.getElementById('croppingTool');
@@ -16,44 +15,14 @@ document.addEventListener('DOMContentLoaded', function() {
         editProfileForm.style.display = 'block';
 
         // Populate edit form with current values
-        document.getElementById('editUsername').value = document.getElementById('username').value;
-        document.getElementById('editEmail').value = document.getElementById('email').value;
+        document.getElementById('editUsername').value = document.getElementById('student_name').value;
+        document.getElementById('editEmail').value = document.getElementById('student_email').value;
     });
 
     // Cancel Button Click Event
     cancelBtn.addEventListener('click', function() {
         profileInfo.style.display = 'block';
         editProfileForm.style.display = 'none';
-    });
-
-    // Profile Form Submit Event
-    profileForm.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        var formData = new FormData(profileForm);
-        
-        fetch('update_profile.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message);
-                // Update displayed info
-                document.getElementById('username').value = data.username;
-                document.getElementById('email').value = data.email;
-                // Switch back to display view
-                profileInfo.style.display = 'block';
-                editProfileForm.style.display = 'none';
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred. Please try again.');
-        });
     });
 
     // Edit Profile Picture Change Event
@@ -64,36 +33,18 @@ document.addEventListener('DOMContentLoaded', function() {
             reader.onload = function(e) {
                 croppingImage.src = e.target.result;
                 croppingTool.style.display = 'block';
-            }
+            };
             reader.readAsDataURL(file);
         }
     });
 
     // Crop Button Click Event
     cropBtn.addEventListener('click', function() {
-        var croppedImageData = croppingImage.src; // This should be a global variable if needed elsewhere
+        var croppedImageData = croppingImage.src;
         croppingTool.style.display = 'none';
-        profilePicture.src = croppedImageData; // Update profile picture with cropped image
+        profilePicture.src = croppedImageData;
 
-        // Send cropped image to server
-        fetch('update_profile_picture.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ image: croppedImageData }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Profile picture updated successfully');
-            } else {
-                alert('Failed to update profile picture');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An error occurred while updating the profile picture');
-        });
+        // You may want to send the cropped image to the server here
+        // This would require additional server-side code to handle the image upload
     });
-});
+});   

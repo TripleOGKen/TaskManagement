@@ -4,6 +4,30 @@ if (!isset($_SESSION['student_id'])) {
     header("Location: login.php");
     exit();
 }
+
+$student_id = $_SESSION['student_id'];
+
+// Database connection
+$db_host = 'localhost';
+$db_user = 'root';
+$db_password = '';
+$db_name = 'taskmanagement';
+
+$db = new mysqli($db_host, $db_user, $db_password, $db_name);
+
+if ($db->connect_error) {
+    die("Database connection failed: " . $db->connect_error);
+}
+
+// Fetch PDF if exists
+$stmt = $db->prepare("SELECT pdf_file FROM student WHERE student_id = ?");
+$stmt->bind_param("i", $student_id);
+$stmt->execute();
+$stmt->bind_result($pdf_content_base64);
+$stmt->fetch();
+$stmt->close();
+
+$has_pdf = !empty($pdf_content_base64);
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +59,11 @@ if (!isset($_SESSION['student_id'])) {
             <input type="file" id="pdf-upload" accept="application/pdf">
             <div class="pdf-controls">
             </div>
-            <iframe id="pdf-viewer"></iframe>
+            <?php if ($has_pdf): ?>
+                <iframe id="pdf-viewer" src="data:application/pdf;base64,<?php echo $pdf_content_base64; ?>"></iframe>
+            <?php else: ?>
+                <iframe id="pdf-viewer"></iframe>
+            <?php endif; ?>
         </div>
         <div class="container">
             <div id="calendar"></div>
