@@ -17,6 +17,7 @@ $stmt = $db->prepare("UPDATE tasks SET task_name = ?, task_description = ?, task
 $stmt->bind_param("ssssii", $data['task_name'], $data['task_description'], $data['task_date'], $data['task_priority'], $data['task_id'], $student_id);
 
 if ($stmt->execute()) {
+    $data['task_id'] = $data['task_id'];
     echo json_encode($data);
 } else {
     echo json_encode(['error' => 'Failed to update task']);
