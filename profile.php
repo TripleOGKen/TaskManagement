@@ -20,15 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['editEmail'];
     $password = $_POST['editPassword'];
     
-    // Check for profile picture upload
+    //Check for profile picture upload
     $profile_picture = null;
     if (isset($_FILES["editProfilePicture"]) && $_FILES["editProfilePicture"]["error"] == 0) {
         $profile_picture = file_get_contents($_FILES["editProfilePicture"]["tmp_name"]);
     }
 
-    // Update profile information
+    //Update profile information
     if ($profile_picture) {
-        // For debugging purposes
+        //For debugging purposes
         $file_size = strlen($profile_picture);
         error_log("Profile picture size: $file_size bytes");
 
@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->close();
 }
 
-//fetch user details
+//Fetch user details
 $stmt = $conn->prepare("SELECT student_id, student_email, student_name, profile_picture FROM student WHERE student_id = ?");
 $stmt->bind_param("s", $_SESSION['student_id']);
 $stmt->execute();

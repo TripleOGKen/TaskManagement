@@ -92,7 +92,7 @@ button {
 
     .container {
         flex: 1;
-        min-width: 0; /* Allows flex items to shrink below content size */
+        min-width: 0; 
     }
 
     #task-form {
@@ -135,7 +135,7 @@ button {
 /* Landscape mode styles */
 @media screen and (orientation: landscape) {
     body {
-        background-color: #e0e0e0; /* Optional: change background color in landscape */
+        background-color: #e0e0e0; 
     }
 
     .main-container {

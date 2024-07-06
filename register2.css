@@ -9,19 +9,19 @@ body {
     max-width: 400px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #ffffff; /* White background */
+    background-color: #ffffff; 
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center align all text within container */
+    text-align: center; 
 }
 
 .container h2 {
-    margin-top: 0; /* Remove default margin */
+    margin-top: 0; 
 }
 
 .form-group {
     margin-bottom: 20px;
-    text-align: left; /* Align labels and inputs to the left */
+    text-align: left; 
 }
 
 .form-group label {
@@ -44,17 +44,17 @@ body {
     padding: 10px;
     border-radius: 5px;
     border: none;
-    background-color: #007bff; /* Default blue color */
+    background-color: #007bff; 
     color: #ffffff;
     cursor: pointer;
 }
 
 .register-button:hover {
-    background-color: #0056b3; /* Darker blue color on hover */
+    background-color: #0056b3; 
 }
 
 .register-link {
     text-align: center;
     font-size: 14px;
-    margin-top: 20px; /* Add space between form and registration link */
+    margin-top: 20px; 
 }

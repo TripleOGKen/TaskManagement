@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const pdfViewer = document.getElementById('pdf-viewer');
     const autoPriorityToggle = document.getElementById('auto-priority-toggle');
     
-    // Sidebar button event listeners
+    //Sidebar button event listeners
     document.getElementById('profile-btn').addEventListener('click', function() {
         window.location.href = 'profile.php';
     });
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentRotation = 0;
     let isAutoPriority = false;
 
-    // Initialize Calendar
+    //Initialize Calendar
     const calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         height: '100%',
@@ -45,13 +45,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     calendar.render();
 
-    // Auto Priority Toggle
+    //Auto Priority Toggle
     autoPriorityToggle.addEventListener('change', function() {
         isAutoPriority = this.checked;
         taskPriority.disabled = isAutoPriority;
     });
 
-    // Task Form Submit
+    //Task Form Submit
     taskForm.addEventListener('submit', function(event) {
         event.preventDefault();
         const taskName = taskNameInput.value.trim();
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 task_priority: taskPriorityValue
             };
 
-            // Send task to server
+            //Send task to server
             fetch('add_task.php', {
                 method: 'POST',
                 headers: {
@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
         alert(details);
     }
 
-    // Add Task to List
+    //Add Task to List
     function addTaskToList(task) {
         const li = document.createElement('li');
         li.className = 'task-item';
@@ -240,7 +240,7 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => console.error('Error:', error));
     }
 
-    // PDF Viewer
+    //PDF Viewer
     pdfUpload.addEventListener('change', function(event) {
         const file = event.target.files[0];
         if (file.type !== 'application/pdf') {
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
         currentRotation = 0;
         pdfViewer.style.transform = `rotate(${currentRotation}deg)`;
 
-        // Upload PDF to server
+        //Upload PDF to server
         const formData = new FormData();
         formData.append('pdf_file', file);
 
@@ -280,12 +280,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Initialize tasks
+    //Initialize tasks
     tasks.forEach(addTaskToList);
 
-    // Landscape Mode Detection
+    //Landscape Mode Detection
     function checkOrientation() {
-        if (window.innerHeight > window.innerWidth) {
+        if (window.innerHeight < window.innerWidth) {
             alert("Please use landscape mode for better experience.");
         }
     }

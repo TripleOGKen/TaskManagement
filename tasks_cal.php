@@ -7,7 +7,6 @@ if (!isset($_SESSION['student_id'])) {
 
 $student_id = $_SESSION['student_id'];
 
-// Database connection
 $db_host = 'localhost';
 $db_user = 'root';
 $db_password = '';

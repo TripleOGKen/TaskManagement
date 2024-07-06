@@ -14,14 +14,14 @@ body {
     padding: 15px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     display: flex;
-    flex-direction: column;  /* Ensure column direction */
+    flex-direction: column;  
     gap: 10px;
 }
 
 .sidebar-content {
     display: flex;
     flex-direction: column;
-    gap: 10px; /* Space between buttons */
+    gap: 10px; 
 }
 
 .sidebar-item {
@@ -40,10 +40,10 @@ body {
 }
 
 .container {
-    margin-left: 200px;  /* Increased margin to match sidebar width */
+    margin-left: 200px;  
     flex-direction: column;
     padding: 20px;
-    width: calc(100% - 200px);  /* Adjusted width calculation */
+    width: calc(100% - 200px);  
     transition: margin-left 0.3s, width 0.3s;
 }
 
