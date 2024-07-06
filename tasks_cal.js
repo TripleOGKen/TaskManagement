@@ -285,7 +285,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //Landscape Mode Detection
     function checkOrientation() {
-        if (window.innerHeight < window.innerWidth) {
+        if (window.innerHeight > window.innerWidth) {
             alert("Please use landscape mode for better experience.");
         }
     }
