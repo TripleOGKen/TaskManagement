@@ -1,7 +1,7 @@
 <?php
 require_once 'databaseTask.php';
 
-session_start();
+session_start(); //starting the database with the session assigned to the user
 if (!isset($_SESSION['student_id'])) {
     header("Location: login.php");
     exit();
